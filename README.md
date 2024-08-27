@@ -1,8 +1,13 @@
-# 🍋 柠檬新标签页
+<p align="center">
+<img  alt="chodocs" src="https://cdn.jsdelivr.net/gh/sunxuecong/static/lemon.png"/>
+</p>
 
-![Extension Logo](https://cdn.jsdelivr.net/gh/sunxuecong/static/lemon.png)
+<h1 align="center">
+🌟🍋 柠檬新标签页
+</h1>
 
-🚀 **柠檬新标签页** 是一个专为提升浏览体验而设计的谷歌浏览器插件。它为你的新标签页带来清新、简洁的风格，同时提供多种实用功能，让你的浏览器焕然一新。
+
+🌟 **柠檬新标签页** 是一个专为提升浏览体验而设计的谷歌浏览器插件。它为你的新标签页带来清新、简洁的风格，同时提供多种实用功能，让你的浏览器焕然一新。
 
 ## ✨ 功能特点
 
