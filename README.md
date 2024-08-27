@@ -45,6 +45,13 @@
 
 - Chrome 最新版本
 - Edge Chromium
+  
+
+## 📸 部分截图
+<img  alt="chodocs" src="https://cdn.jsdelivr.net/gh/sunxuecong/static/lemon1.png"/>
+<img  alt="chodocs" src="https://cdn.jsdelivr.net/gh/sunxuecong/static/lemon2.png"/>
+<img  alt="chodocs" src="https://cdn.jsdelivr.net/gh/sunxuecong/static/lemon3.png"/>
+
 
 ## 👥 联系方式
 
