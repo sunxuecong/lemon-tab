@@ -1,8 +1,8 @@
 /*
  * @Author: sunxc
  * @Date: 2020-03-25 14:14:18
- * @LastEditors: sunxc
- * @LastEditTime: 2021-06-10 14:02:34
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-08-27 16:11:54
  * @Description: file content
  */
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
     },
   },
   // 构建输入文件夹
-  outputDir: process.env.NODE_ENV == 'web' ? 'search' : 'newTabs/dist',
+  outputDir: 'dist',
 
   css: {
     // 是否使用css扩展
