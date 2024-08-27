@@ -1,6 +1,6 @@
 # 🍋 柠檬新标签页
 
-![Extension Logo](https://your-logo-url.com/logo.png)
+![Extension Logo](https://cdn.jsdelivr.net/gh/sunxuecong/static/lemon.svg)
 
 🚀 **柠檬新标签页** 是一个专为提升浏览体验而设计的谷歌浏览器插件。它为你的新标签页带来清新、简洁的风格，同时提供多种实用功能，让你的浏览器焕然一新。
 
@@ -47,7 +47,3 @@
 
 - 📧 邮箱: [sunxc0713@163.com](sunxc0713@163.com)
 - 🐦 Twitter: [@sunxc0713](@sunxc0713)
-
-## 🎉 致谢
-
-感谢所有为“柠檬新标签页”做出贡献的开发者和设计师们！
