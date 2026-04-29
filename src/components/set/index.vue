@@ -37,19 +37,26 @@
 import Wallpaper from '@/components/set/wallpaper'
 import LocalWapaper from '@/components/set/localWapaper'
 import SearchBox from '@/components/set/searchBox'
+import Personalized from '@/components/set/personalized'
 export default {
   name: "",
   props: {},
   components:{
     Wallpaper,
     LocalWapaper,
-    SearchBox
+    SearchBox,
+    Personalized
   },
   data() {
     //这里存放数据
     return {
       currentIndex:0,
       tabs:[
+        {
+          name:'个性化',
+          component:'Personalized',
+          title:'个性化设置'
+        },
         {
           name:'壁纸',
           component:'LocalWapaper',

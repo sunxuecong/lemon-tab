@@ -85,6 +85,83 @@ const setContent = {
   layout: [2, 6], //图标布局
   yiyan: true, //是否显示一言
   search: 'baidu', //默认搜索
+  // 新增设置
+  autoWallpaper: false, //自动壁纸
+  wallpaperInterval: 24, //壁纸切换间隔（小时）
+  widgetOpacity: 90, //组件透明度
+  smoothAnimation: true, //流畅动画
+  customTheme: {
+    primary: '#409eff',
+    secondary: '#67c23a',
+    accent: '#e6a23c',
+    background: '#f5f7fa',
+    text: '#303133',
+  }, //自定义主题颜色
+}
+
+// 组件默认配置
+const defaultWidgets = [
+  {
+    id: 'time',
+    type: 'time',
+    title: '时间',
+    position: { x: 0, y: 0 },
+    size: { width: 1, height: 1 },
+    visible: true,
+    order: 1
+  },
+  {
+    id: 'search',
+    type: 'search',
+    title: '搜索',
+    position: { x: 0, y: 1 },
+    size: { width: 1, height: 1 },
+    visible: true,
+    order: 2
+  },
+  {
+    id: 'weather',
+    type: 'weather',
+    title: '天气',
+    position: { x: 0, y: 2 },
+    size: { width: 1, height: 1 },
+    visible: true,
+    order: 3
+  },
+  {
+    id: 'quickNav',
+    type: 'quickNav',
+    title: '快捷导航',
+    position: { x: 0, y: 3 },
+    size: { width: 1, height: 1 },
+    visible: true,
+    order: 4
+  },
+  {
+    id: 'todo',
+    type: 'todo',
+    title: '待办事项',
+    position: { x: 0, y: 4 },
+    size: { width: 1, height: 1 },
+    visible: true,
+    order: 5
+  },
+  {
+    id: 'bookmark',
+    type: 'bookmark',
+    title: '书签',
+    position: { x: 0, y: 5 },
+    size: { width: 1, height: 1 },
+    visible: true,
+    order: 6
+  }
+]
+
+// 搜索历史默认配置
+const defaultSearchHistory = {
+  enabled: true,
+  maxItems: 50,
+  items: []
 }
 export default new Vuex.Store({
   state: {
@@ -94,6 +171,9 @@ export default new Vuex.Store({
     }, //壁纸
     bingWallpaper: {}, //壁纸
     navList: [], //导航图标列表
+    widgets: [], //可拖拽组件列表
+    searchHistory: {}, //搜索历史
+    bookmarks: [], //书签数据
     // 无需存储local
     editType: '', //编辑类型  add edit
     moment: '', //天气时刻  d白天 n晚上 
@@ -113,10 +193,15 @@ export default new Vuex.Store({
       type: '', //是否显示dialog
     },
     userInfo: null,
+    isWidgetEdit: false, //是否处于组件编辑模式
   },
   getters: {
-
-
+    visibleWidgets: state => {
+      return state.widgets.filter(w => w.visible).sort((a, b) => a.order - b.order)
+    },
+    searchHistoryItems: state => {
+      return state.searchHistory.items || []
+    }
   },
   mutations: {
     setSetContent(state, val) {
@@ -172,8 +257,76 @@ export default new Vuex.Store({
       local.set("userInfo", val);
       state.userInfo = val
     },
-
-
+    // 新增mutations
+    setWidgets(state, val) {
+      state.widgets = val
+      local.set("widgets", val);
+      debounceSaveConfig()
+    },
+    updateWidget(state, { id, updates }) {
+      const index = state.widgets.findIndex(w => w.id === id)
+      if (index !== -1) {
+        state.widgets[index] = { ...state.widgets[index], ...updates }
+        local.set("widgets", state.widgets);
+        debounceSaveConfig()
+      }
+    },
+    setWidgetEdit(state, val) {
+      state.isWidgetEdit = val
+    },
+    setSearchHistory(state, val) {
+      state.searchHistory = val
+      local.set("searchHistory", val);
+    },
+    addSearchHistory(state, item) {
+      if (!state.searchHistory.enabled) return
+      const items = [...(state.searchHistory.items || [])]
+      const index = items.findIndex(i => i.keyword === item.keyword)
+      if (index !== -1) {
+        items.splice(index, 1)
+      }
+      items.unshift({
+        keyword: item.keyword,
+        searchEngine: item.searchEngine,
+        timestamp: dayjs().valueOf()
+      })
+      if (items.length > state.searchHistory.maxItems) {
+        items.pop()
+      }
+      state.searchHistory.items = items
+      local.set("searchHistory", state.searchHistory);
+    },
+    clearSearchHistory(state) {
+      state.searchHistory.items = []
+      local.set("searchHistory", state.searchHistory);
+    },
+    setBookmarks(state, val) {
+      state.bookmarks = val
+      local.set("bookmarks", val);
+      debounceSaveConfig()
+    },
+    addBookmark(state, bookmark) {
+      state.bookmarks.push({
+        id: dayjs().valueOf(),
+        ...bookmark,
+        created: dayjs().valueOf()
+      })
+      local.set("bookmarks", state.bookmarks);
+      debounceSaveConfig()
+    },
+    updateBookmark(state, { id, updates }) {
+      const index = state.bookmarks.findIndex(b => b.id === id)
+      if (index !== -1) {
+        state.bookmarks[index] = { ...state.bookmarks[index], ...updates }
+        local.set("bookmarks", state.bookmarks);
+        debounceSaveConfig()
+      }
+    },
+    deleteBookmark(state, id) {
+      state.bookmarks = state.bookmarks.filter(b => b.id !== id)
+      local.set("bookmarks", state.bookmarks);
+      debounceSaveConfig()
+    },
   },
   actions: {
     // 保存配置
@@ -197,6 +350,10 @@ export default new Vuex.Store({
         text: "",
         created: dayjs().valueOf(),
       },]
+      // 初始化新功能
+      state.widgets = local.get('widgets') || utils.deepClone(defaultWidgets)
+      state.searchHistory = local.get('searchHistory') || utils.deepClone(defaultSearchHistory)
+      state.bookmarks = local.get('bookmarks') || []
 
       // 如果token过期 或者没有登陆 不走接口
       if (!userInfo) return
