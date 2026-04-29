@@ -1,33 +1,158 @@
-// 深色模式
+// 深色模式增强版
 .dark {
-    // 背景
-    --main-color: 0, 0, 0;
-    --background-info: #fff;
-    --background: rgba(255,255,255, 0.14);
-        --background: 0, 0, 0;
     --main-color: 255, 255, 255;
-    --border: 1px solid #ffff;
-    --color: #fff;
-    --logo-hover:#333;
-    --hover-color:#222;
-
+    --background: 0, 0, 0;
+    --background-info: rgba(30, 30, 40, 0.95);
+    --background-opacity: 0.15;
+    --border: 1px solid rgba(255, 255, 255, 0.1);
+    --color: #ffffff;
+    --color-secondary: rgba(255, 255, 255, 0.7);
+    --color-tertiary: rgba(255, 255, 255, 0.5);
+    --logo-hover: rgba(255, 255, 255, 0.9);
+    --hover-color: rgba(255, 255, 255, 0.1);
+    --card-background: rgba(30, 30, 40, 0.85);
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --input-background: rgba(255, 255, 255, 0.08);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --success-color: #67c23a;
+    --warning-color: #e6a23c;
+    --danger-color: #f56c6c;
+    --info-color: #909399;
 }
 
-// 亮色模式
+// 亮色模式增强版
 .light {
     --main-color: 255, 255, 255;
-    --background-info: #fff;
-    --background: rgba(255,255,255, 0.14);
-    --main-color: 255, 255, 255;
-    --border: 1px solid #ffff;
-    --color: #fff;
-    --logo-hover:#333;
-    --hover-color:#333;
-    // --background: 255, 255, 255;
-    // --background-info: #fff;
-    // --main-color: 0, 0, 0;
+    --background: 255, 255, 255;
+    --background-info: rgba(255, 255, 255, 0.95);
+    --background-opacity: 0.1;
+    --border: 1px solid rgba(0, 0, 0, 0.08);
+    --color: #303133;
+    --color-secondary: #606266;
+    --color-tertiary: #909399;
+    --logo-hover: #409eff;
+    --hover-color: rgba(0, 0, 0, 0.05);
+    --card-background: rgba(255, 255, 255, 0.9);
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --input-background: rgba(0, 0, 0, 0.02);
+    --input-border: rgba(0, 0, 0, 0.1);
+    --success-color: #67c23a;
+    --warning-color: #e6a23c;
+    --danger-color: #f56c6c;
+    --info-color: #909399;
 }
 
+// 根主题变量 - 支持自定义主题
 :root {
     --primary-color: #409eff;
+    --secondary-color: #67c23a;
+    --accent-color: #e6a23c;
+    --success-color: #67c23a;
+    --warning-color: #e6a23c;
+    --danger-color: #f56c6c;
+    --info-color: #909399;
+    // 动画变量
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    // 阴影变量
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+// 通用动画类
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+// 实用工具类
+.animate-fadeIn {
+    animation: fadeIn 0.3s ease;
+}
+
+.animate-slideInUp {
+    animation: slideInUp 0.4s ease;
+}
+
+.animate-slideInDown {
+    animation: slideInDown 0.4s ease;
+}
+
+.animate-scaleIn {
+    animation: scaleIn 0.3s ease;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.animate-float {
+    animation: float 3s infinite ease-in-out;
 }
